@@ -1,0 +1,454 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M. Ali | The Art of Hospitality</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Elegant Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Base Variables */
+        :root {
+            --bg-color: #050505;
+            --surface-color: #0f0f0f;
+            --surface-light: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #999999;
+            --accent-gold: #d4af37;
+            --gold-muted: rgba(212, 175, 55, 0.3);
+            --line-color: rgba(255, 255, 255, 0.08);
+            --border-gold: rgba(212, 175, 55, 0.2);
+        }
+
+        /* Reset & Global */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        html { scrollbar-width: none; }
+        ::-webkit-scrollbar { display: none; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 10000;
+            pointer-events: none;
+        }
+        .cursor-dot {
+            width: 5px; height: 5px;
+            background-color: var(--accent-gold);
+        }
+        .cursor-outline {
+            width: 35px; height: 35px;
+            border: 1px solid var(--gold-muted);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+
+        /* Typography */
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+
+        .label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            display: inline-block;
+            border: 1px solid var(--border-gold);
+            padding: 5px 15px;
+            border-radius: 30px;
+        }
+
+        p { font-size: 0.95rem; line-height: 1.8; color: var(--text-secondary); font-weight: 300; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-bottom: 1px solid var(--line-color);
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo { font-size: 1.2rem; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; text-decoration: none; font-weight: 500; }
+        .logo span { color: var(--accent-gold); }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 0 5%;
+            padding-top: 5rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; right: 0;
+            width: 60%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80') center/cover;
+            opacity: 0.4;
+            filter: grayscale(100%);
+            mask-image: linear-gradient(to right, transparent, black);
+            -webkit-mask-image: linear-gradient(to right, transparent, black);
+            z-index: -1;
+        }
+
+        .hero-content { width: 60%; z-index: 1; position: relative; }
+        .hero h1 { font-size: clamp(3rem, 7vw, 6.5rem); line-height: 1.1; margin: 1.5rem 0; letter-spacing: -0.02em; }
+        .hero p.subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 500px; margin-bottom: 3rem; border-left: 2px solid var(--accent-gold); padding-left: 1.5rem; }
+
+        .rotating-badge { position: absolute; bottom: 15%; right: 10%; width: 150px; height: 150px; animation: spin 15s linear infinite; }
+        .rotating-badge svg { width: 100%; height: 100%; fill: var(--accent-gold); letter-spacing: 3px; font-size: 12px; font-family: 'Montserrat'; text-transform: uppercase;}
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Section Layout */
+        section { padding: 8rem 5%; position: relative; }
+
+        .stats-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: -4rem; position: relative; z-index: 10; padding: 0 5%; }
+        .stat-box { background: var(--surface-light); padding: 3rem 2rem; text-align: center; border: 1px solid var(--line-color); position: relative; }
+        .stat-box::before, .stat-box::after { content: '+'; position: absolute; color: var(--accent-gold); font-size: 1.2rem; opacity: 0.5; }
+        .stat-box::before { top: -10px; left: -5px; }
+        .stat-box::after { bottom: -10px; right: -5px; }
+        .stat-box h3 { font-size: 3.5rem; color: var(--accent-gold); margin-bottom: 0.5rem; }
+        .stat-box p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-primary); }
+
+        /* About Section */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; align-items: center; }
+        .image-wrapper { position: relative; padding: 1.5rem; border: 1px solid var(--border-gold); }
+        .image-wrapper::before, .image-wrapper::after { content: ''; position: absolute; width: 20px; height: 20px; border-color: var(--accent-gold); border-style: solid; }
+        .image-wrapper::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+        .image-wrapper::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+        .image-wrapper img { width: 100%; aspect-ratio: 4/5; object-fit: cover; filter: grayscale(80%); transition: filter 0.5s ease; }
+        .image-wrapper:hover img { filter: grayscale(0%); }
+        .about-text h2 { font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 2rem; line-height: 1.2; }
+
+        /* Experience Section */
+        .experience-header { margin-bottom: 4rem; }
+        .exp-list { border-top: 1px solid var(--line-color); }
+        .exp-item { display: grid; grid-template-columns: 0.5fr 2fr 1fr; align-items: center; padding: 3rem 0; border-bottom: 1px solid var(--line-color); transition: all 0.4s ease; text-decoration: none; color: inherit; }
+        .exp-item:hover { background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.05), transparent); padding-left: 2rem; }
+        .exp-item i { font-size: 1.5rem; color: var(--accent-gold); opacity: 0.5; transition: opacity 0.3s; }
+        .exp-item:hover i { opacity: 1; transform: scale(1.1); }
+        .exp-title { font-size: 1.8rem; font-family: 'Playfair Display', serif; }
+        .exp-company { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em; text-align: right; }
+
+        /* Expertise Section */
+        .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .skill-card { padding: 3rem 2rem; background: var(--surface-color); border: 1px solid var(--line-color); position: relative; transition: all 0.4s ease; }
+        .skill-icon { font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 2rem; display: inline-block; }
+        .skill-card:hover { border-color: var(--accent-gold); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .skill-card h3 { font-size: 1.4rem; margin-bottom: 1rem; }
+
+        /* Footer */
+        footer { padding: 6rem 5% 3rem; text-align: center; background: var(--surface-color); border-top: 1px solid var(--line-color); }
+        .footer-content h2 { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 3rem; }
+        .contact-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 4rem; }
+        .btn-outline { display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; border: 1px solid var(--border-gold); color: var(--text-primary); text-decoration: none; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem; transition: all 0.3s ease; }
+        .btn-outline:hover { background: var(--accent-gold); color: var(--bg-color); }
+        .copyright { font-size: 0.7rem; letter-spacing: 0.2em; color: #555; text-transform: uppercase; }
+
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 992px) {
+            .hero-bg { width: 100%; opacity: 0.2; }
+            .hero-content { width: 100%; }
+            .rotating-badge { display: none; }
+            .stats-container { grid-template-columns: 1fr; margin-top: 2rem; padding: 0; }
+            .grid-2 { grid-template-columns: 1fr; gap: 4rem; }
+            .exp-item { grid-template-columns: 1fr; gap: 0.5rem; padding: 2rem 0; }
+            .exp-item i { display: none; }
+            .exp-company { text-align: left; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .contact-links { flex-direction: column; }
+            .cursor-dot, .cursor-outline { display: none; }
+            * { cursor: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+<nav>
+    <a href="#" class="logo interactable">M. Ali <span>Rizal</span></a>
+
+    <div class="menu-btn" onclick="toggleMenu()">&#9776;</div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#certificates">Certificates</a>
+        <a href="#contact">Contact</a>
+    </div>
+</nav>
+
+<style>
+.menu-btn{
+    font-size: 32px;
+    color: #d4af37;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.3s;
+}
+
+.menu-btn:hover{
+    opacity: 0.8;
+}
+
+.mobile-menu{
+    display: none;
+    position: absolute;
+    top: 90px;
+    right: 30px;
+    background: rgba(10,10,10,0.95);
+    border: 1px solid #d4af37;
+    border-radius: 12px;
+    padding: 15px 20px;
+    min-width: 180px;
+    backdrop-filter: blur(10px);
+    z-index: 999;
+}
+
+.mobile-menu a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 10px 0;
+    transition: 0.3s;
+}
+
+.mobile-menu a:hover{
+    color: #d4af37;
+}
+</style>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById("mobileMenu");
+
+    if(menu.style.display === "block"){
+        menu.style.display = "none";
+    } else {
+        menu.style.display = "block";
+    }
+}
+
+document.addEventListener("click", function(event){
+    const menu = document.getElementById("mobileMenu");
+    const button = document.querySelector(".menu-btn");
+
+    if(!menu.contains(event.target) && !button.contains(event.target)){
+        menu.style.display = "none";
+    }
+});
+</script>
+
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content reveal active">
+            <span class="label">Hospitality Professional</span>
+            <h1>Service of <br><span style="color: var(--accent-gold); font-style: italic;">Excellence</span></h1>
+            <p class="subtitle">Seni merangkai kenyamanan, ketepatan, dan keanggunan di setiap interaksi tamu. Mengorkestrasi pengalaman bintang lima yang tak terlupakan.</p>
+        </div>
+
+        <div class="rotating-badge interactable">
+            <svg viewBox="0 0 100 100">
+                <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="transparent" />
+                <text>
+                    <textPath href="#circlePath" startOffset="0%">
+                        • M. ALI RIZAL • HOSPITALITY EXCELLENCE
+                    </textPath>
+                </text>
+            </svg>
+        </div>
+    </section>
+
+    <div class="stats-container reveal">
+        <div class="stat-box interactable">
+            <h3>20+</h3>
+            <p>Sesi Praktik Operasional</p>
+        </div>
+        <div class="stat-box interactable">
+            <h3>7</h3>
+            <p>Major Banquet Events</p>
+        </div>
+        <div class="stat-box interactable">
+            <h3>100%</h3>
+            <p>Dedikasi Pelayanan Prima</p>
+        </div>
+    </div>
+
+    <section id="about">
+        <div class="grid-2">
+            <div class="image-wrapper reveal interactable">
+                <img src="https://images.unsplash.com/photo-1556745753-b2904692b3cd?auto=format&fit=crop&w=800&q=80" alt="Ali Khoirul Rizal">
+            </div>
+            <div class="about-text reveal">
+                <span class="label">Profil Eksekutif</span>
+                <h2>Seni Memahami Tanpa Harus Diminta</h2>
+                <p>Saya merupakan talenta muda di industri perhotelan dari SMKN 9 Bandung. Saya membangun fondasi karir dengan satu prinsip utama: <strong>hospitality sejati tidak hanya melayani, tetapi mengantisipasi kebutuhan tamu</strong>.</p>
+                <p>Didukung oleh standar <em>grooming</em> yang prima dan ketahanan fisik operasional, saya siap menghadirkan standar ekselensi. Dari penanganan <em>clear up</em> yang elegan di restoran <em>fine dining</em> hingga manajemen kamar yang terstruktur, saya berdedikasi penuh pada kenyamanan tamu.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="experience-header reveal">
+            <span class="label">Rekam Jejak</span>
+            <h2>Perjalanan Profesional</h2>
+        </div>
+
+        <div class="exp-list">
+            <a href="#" class="exp-item reveal interactable">
+                <i class="fas fa-wine-glass-alt"></i>
+                <div>
+                    <div class="exp-title">F&B Service Specialist</div>
+                    <div style="color: var(--accent-gold); font-size: 0.85rem; margin-top: 5px;">20+ Sesi Praktik Bertaraf Internasional</div>
+                </div>
+                <div class="exp-company">InterContinental Dago Pakar</div>
+            </a>
+            
+            <a href="#" class="exp-item reveal interactable">
+                <i class="fas fa-concierge-bell"></i>
+                <div>
+                    <div class="exp-title">Banquet Service Professional</div>
+                    <div style="color: var(--accent-gold); font-size: 0.85rem; margin-top: 5px;">7 Acara Perjamuan Berskala Besar</div>
+                </div>
+                <div class="exp-company">Hotel Indigo Dago Pakar</div>
+            </a>
+
+            <a href="#" class="exp-item reveal interactable">
+                <i class="fas fa-graduation-cap"></i>
+                <div>
+                    <div class="exp-title">Hospitality Management</div>
+                    <div style="color: var(--accent-gold); font-size: 0.85rem; margin-top: 5px;">Pendidikan Vokasi Perhotelan</div>
+                </div>
+                <div class="exp-company">SMKN 9 Bandung</div>
+            </a>
+        </div>
+    </section>
+
+    <section id="expertise">
+        <div style="text-align: center; margin-bottom: 4rem;" class="reveal">
+            <span class="label">Kompetensi Inti</span>
+            <h2>Spesialisasi Operasional</h2>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-card reveal interactable">
+                <i class="fas fa-utensils skill-icon"></i>
+                <h3>F&B Operations</h3>
+                <p>Penguasaan <em>table manner</em> internasional, teknik <em>clear-up</em> yang presisi, dan eksekusi tata laksana perjamuan (<em>banquet</em>) berskala besar.</p>
+            </div>
+            
+            <div class="skill-card reveal interactable" style="transition-delay: 0.1s;">
+                <i class="fas fa-user-tie skill-icon"></i>
+                <h3>Guest Relations</h3>
+                <p>Diplomasi dalam penanganan keluhan (<em>complaint handling</em>) dengan elegan, komunikasi bahasa Inggris dasar, dan wujud <em>Service of Excellence</em>.</p>
+            </div>
+            
+            <div class="skill-card reveal interactable" style="transition-delay: 0.2s;">
+                <i class="fas fa-bed skill-icon"></i>
+                <h3>Housekeeping</h3>
+                <p>Manajemen kamar (VCI, DND, Incognito), eksekusi protokol barang temuan (<em>Lost & Found</em>), serta menjaga kelayakan higienitas tamu.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="reveal">
+            <span class="label">Mari Berkolaborasi</span>
+            <div class="footer-content">
+                <h2>Siap Berkarya di Industri</h2>
+            </div>
+            
+            <div class="contact-links interactable">
+                <a href="mailto:alimicrosoft2023@gmail.com" class="btn-outline">
+                    <i class="fas fa-envelope"></i> Email Saya
+                </a>
+                <a href="https://www.instagram.com/aliikhriz?igsh=N2hra2g0NnEyOWp2&utm_source=qr" class="btn-outline" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="https://wa.me/6283159970756" class="btn-outline" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+            
+            <p class="copyright">&copy; 2026 M. Ali Khoirul Rizal. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorOutline = document.getElementById('cursor-outline');
+        const interactables = document.querySelectorAll('.interactable, a, .btn-outline');
+
+        window.addEventListener('mousemove', (e) => {
+            cursorDot.style.left = `${e.clientX}px`;
+            cursorDot.style.top = `${e.clientY}px`;
+            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 300, fill: "forwards" });
+        });
+
+        interactables.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.backgroundColor = 'rgba(212, 175, 55, 0.1)';
+            });
+            item.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '35px';
+                cursorOutline.style.height = '35px';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+        const revealOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+
+        reveals.forEach(reveal => { revealOnScroll.observe(reveal); });
+    </script>
+</body>
+</html>
+
+```
